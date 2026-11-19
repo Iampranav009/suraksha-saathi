@@ -47,7 +47,21 @@ const RISK_CONFIG = {
   },
 };
 
-function speakMarathi(text: string) {
+async function speakMarathi(text: string) {
+  try {
+    const res = await fetch('/api/tts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+    });
+    if (res.ok) {
+      const { audioBase64, mimeType } = await res.json();
+      const audio = new Audio(`data:${mimeType};base64,${audioBase64}`);
+      audio.play();
+      return;
+    }
+  } catch { /* fall through */ }
+  // Fallback: Web Speech API
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(text);
@@ -88,15 +102,15 @@ export default function Home() {
     }
   }
 
-  function handleSpeak() {
+  async function handleSpeak() {
     if (!result) return;
     const text =
       result.explanation_mr ||
       result.safeAction_mr ||
       RISK_CONFIG[result.level].mr;
     setSpeaking(true);
-    speakMarathi(text);
-    setTimeout(() => setSpeaking(false), 4000);
+    await speakMarathi(text);
+    setTimeout(() => setSpeaking(false), 1000);
   }
 
   const cfg = result ? RISK_CONFIG[result.level] : null;

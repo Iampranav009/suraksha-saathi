@@ -21,8 +21,7 @@ async function callGemini(prompt: string): Promise<{ explanation_mr: string; exp
           signal: AbortSignal.timeout(8000),
         }
       );
-      if (res.status === 503) continue; // try next model
-      if (!res.ok) return null;
+      if (!res.ok) continue; // 429 quota / 503 overload on one model: try the next
       const data = await res.json();
       const text: string = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
       const match = text.match(/\{[\s\S]*\}/);

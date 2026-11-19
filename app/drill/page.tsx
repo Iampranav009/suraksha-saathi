@@ -22,7 +22,20 @@ const LESSON = {
   score: 'या आठवड्यात: 1 पैकी 0 पास — Week 1: 0 / 1 passed',
 };
 
-function speakText(text: string) {
+async function speakText(text: string) {
+  try {
+    const res = await fetch('/api/tts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+    });
+    if (res.ok) {
+      const { audioBase64, mimeType } = await res.json();
+      const audio = new Audio(`data:${mimeType};base64,${audioBase64}`);
+      audio.play();
+      return;
+    }
+  } catch { /* fall through */ }
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(text);
@@ -56,10 +69,10 @@ export default function DrillPage() {
     }
   }
 
-  function handleSpeak() {
+  async function handleSpeak() {
     setReading(true);
-    speakText(DRILL_SCRIPT[scriptLine]);
-    setTimeout(() => setReading(false), 3000);
+    await speakText(DRILL_SCRIPT[scriptLine]);
+    setTimeout(() => setReading(false), 500);
   }
 
   function handleShareOTP() {
