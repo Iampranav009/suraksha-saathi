@@ -250,6 +250,24 @@ export default function Home() {
           → Try the Scam Fire-Drill demo
         </Link>
       </div>
+
+      <section className="mt-10" aria-labelledby="demo-video-title">
+        <h2 id="demo-video-title" className="text-lg font-bold text-gray-900">
+          डेमो व्हिडिओ — Watch the demo
+        </h2>
+        <p className="text-sm text-gray-500 mb-3">How Suraksha Saathi works, in 2 minutes.</p>
+        {/* preload="none": nothing downloads until play, so the checker stays fast */}
+        <video
+          className="w-full aspect-video rounded-xl bg-gray-200 shadow-sm"
+          src="/video/suraksha-saathi-demo.mp4"
+          poster="/video/suraksha-saathi-demo-poster.jpg"
+          width={1280}
+          height={720}
+          controls
+          playsInline
+          preload="none"
+        />
+      </section>
     </main>
   );
 }
