@@ -118,28 +118,33 @@ export default function Home() {
   return (
     <main className="max-w-lg mx-auto px-4 py-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">सुरक्षा साथी</h1>
-          <p className="text-sm text-gray-500">Suraksha Saathi</p>
+      <div className="flex items-center justify-between gap-3 mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-xl bg-orange-600 flex items-center justify-center shadow-sm" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5l8-3z" /></svg>
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 leading-tight">सुरक्षा साथी</h1>
+            <p className="text-sm text-gray-600">Suraksha Saathi</p>
+          </div>
         </div>
         <Link
           href="/drill"
-          className="flex items-center gap-1.5 bg-blue-600 text-white text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-700"
+          className="flex items-center gap-1.5 bg-blue-600 text-white text-sm font-semibold px-3.5 py-2.5 rounded-xl shadow-sm hover:bg-blue-700"
         >
           🔔 Scam Fire-Drill
         </Link>
       </div>
 
-      <p className="text-gray-600 text-sm mb-5">
+      <p className="text-gray-800 text-base mb-5">
         संशयास्पद SMS किंवा WhatsApp संदेश इथे पेस्ट करा आणि तपासा.
         <br />
-        <span className="text-gray-400">Paste any suspicious SMS or message below.</span>
+        <span className="text-sm text-gray-600">Paste any suspicious SMS or message below.</span>
       </p>
 
       {/* Sample messages */}
       <div className="mb-3">
-        <p className="text-xs text-gray-400 mb-2 uppercase tracking-wide">Demo messages — tap to load</p>
+        <p className="text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wide">Demo messages — tap to load</p>
         <div className="flex flex-wrap gap-2">
           {sampleMessages.map((s) => (
             <button
@@ -165,13 +170,13 @@ export default function Home() {
         onChange={(e) => { setMessage(e.target.value); setResult(null); }}
         placeholder="संदेश इथे पेस्ट करा… (Paste message here)"
         rows={5}
-        className="w-full border border-gray-300 rounded-xl p-4 text-base text-gray-900 bg-white resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400"
+        className="w-full border border-gray-300 rounded-xl p-4 text-base text-gray-900 bg-white resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-500 shadow-sm"
       />
 
       <button
         onClick={handleCheck}
         disabled={!message.trim() || loading}
-        className="w-full mt-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-semibold text-lg py-4 rounded-xl transition-colors"
+        className="w-full mt-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-200 disabled:text-gray-600 text-white font-semibold text-lg py-4 rounded-xl shadow-sm transition-colors"
       >
         {loading ? '…तपासत आहे' : '🔍 संदेश तपासा — Check Message'}
       </button>
@@ -255,7 +260,7 @@ export default function Home() {
         <h2 id="demo-video-title" className="text-lg font-bold text-gray-900">
           डेमो व्हिडिओ — Watch the demo
         </h2>
-        <p className="text-sm text-gray-500 mb-3">How Suraksha Saathi works, in 2 minutes.</p>
+        <p className="text-sm text-gray-600 mb-3">How Suraksha Saathi works, in 2 minutes.</p>
         {/* preload="none": nothing downloads until play, so the checker stays fast */}
         <video
           className="w-full aspect-video rounded-xl bg-gray-200 shadow-sm"
